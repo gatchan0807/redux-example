@@ -3,6 +3,8 @@ export const todos = (state = [], action) => {
         case 'ADD_TODO':
             state.push(action.content)
             return state
+        case 'DELETE_TODO':
+            state.splice(action.index, 1)
         default:
             return state
     }
