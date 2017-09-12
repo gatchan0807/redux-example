@@ -5,6 +5,7 @@ export const todos = (state = [], action) => {
             return state
         case 'DELETE_TODO':
             state.splice(action.index, 1)
+            return state
         default:
             return state
     }
