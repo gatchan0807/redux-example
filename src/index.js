@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
 import { addTodo, deleteTodo } from './action'
 import { todos } from './reducer'
-import { convertState2Dom } from './util'
+import { convertState2Dom, renderingDomList } from './util'
 
 // store の作成
 let store = createStore(todos, [])
@@ -18,9 +18,7 @@ let todoList = document.getElementById('todo-list')
 
 // todoリストの変換・描画
 let todoDomList = convertState2Dom(state)
-todoDomList.forEach(function (element) {
-    todoList.appendChild(element);
-}, this);
+renderingDomList(todoList, todoDomList)
 
 // todo から 1 番目のものを削除
 store.dispatch(deleteTodo(1))
@@ -32,6 +30,4 @@ while (todoList.firstChild) todoList.removeChild(todoList.firstChild);
 
 // todoリストの変換・描画
 todoDomList = convertState2Dom(state)
-todoDomList.forEach(function (element) {
-    todoList.appendChild(element);
-}, this);
+renderingDomList(todoList, todoDomList)

@@ -6,3 +6,9 @@ export const convertState2Dom = (/*Array*/ state) => {
         return domElement
     })
 }
+
+export const renderingDomList = (parent, domList) => {
+    domList.forEach(function (element) {
+        parent.appendChild(element);
+    }, this);
+}
