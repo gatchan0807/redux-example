@@ -5,6 +5,7 @@ import { convertState2Dom, renderingDomList } from './util'
 
 // store の作成
 let store = createStore(todos, []);
+let state;
 
 // todoの追加
 store.dispatch(action.addTodo("Study ES6"));
