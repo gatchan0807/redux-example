@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "webpack --watch",
     "test": "mocha --compilers js:babel-register --recursive ./test"
   },
   "keywords": [],
