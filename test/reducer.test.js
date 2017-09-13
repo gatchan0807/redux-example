@@ -6,22 +6,24 @@ describe('リデューサーをテストする', () => {
     let initialArray = [];
 
     beforeEach(() => {
-        initialArray = ['first todo']
+        initialArray = ['first todo', 'second todo']
     });
 
     it('ADD_TODOタイプでデータ追加を出来るか', () => {
         const firstContent = initialArray[0];
-        const secondContent = 'second todo';
+        const secondContent = initialArray[1];
+        const thirdContent = 'third todo';
         const action = {
             type: 'ADD_TODO',
-            content: secondContent
+            content: thirdContent
         };
 
         let actual = todos(initialArray, action);
 
-        assert.equal(actual.length, 2);
-        assert.equal(actual[0], firstContent);
-        assert.equal(actual[1], secondContent)
+        assert.strictEqual(actual.length, 3);
+        assert.strictEqual(actual[0], firstContent);
+        assert.strictEqual(actual[1], secondContent);
+        assert.strictEqual(actual[2], thirdContent)
     });
 
     it('DELETE_TODOタイプでデータ削除が出来るか', () => {
@@ -32,6 +34,16 @@ describe('リデューサーをテストする', () => {
 
         let actual = todos(initialArray, action);
 
-        assert.equal(actual.length, 0)
+        assert.strictEqual(actual.length, 1)
+    });
+
+    it('DELETE_ALL_TODOタイプですべてのデータを削除できるか', () => {
+        const action = {
+            type: 'DELETE_ALL_TODO'
+        };
+
+        let actual = todos(initialArray, action);
+
+        assert.strictEqual(actual.length, 0);
     })
 });
