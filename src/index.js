@@ -9,14 +9,17 @@ let state;
 
 let todoDomList;
 let parent = document.getElementById('todo-list');
+let value;
 
 const add = () => {
     // todoの追加
-    store.dispatch(action.addTodo("Study ES6"));
-    store.dispatch(action.addTodo("Study redux"));
-    store.dispatch(action.addTodo("Study react"));
+    if (value !== undefined && value !== '') {
+        store.dispatch(action.addTodo(value));
+    }
 
     state = store.getState();
+
+    while (parent.firstChild) parent.removeChild(parent.firstChild);
 
     // todoリストの変換・描画
     todoDomList = convertState2Dom(state);
@@ -48,6 +51,12 @@ const allDelete = () => {
     todoDomList = convertState2Dom(state);
     renderingDomList(parent, todoDomList);
 };
+
+const getContent = () => {
+    value = document.querySelector('#todo-content').value;
+};
+
+document.querySelector('#todo-content').addEventListener('input', getContent);
 
 document.querySelector('#add-button').addEventListener('click', add);
 document.querySelector('#delete-button').addEventListener('click', deleteWithIndex);
