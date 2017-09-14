@@ -1,14 +1,14 @@
+import { removeWithIndex } from './util'
+
 export const todos = (state = [], action) => {
     switch (action.type) {
         case 'ADD_TODO':
-            state.push(action.content);
-            return state;
+            return state.concat(action.content);
         case 'DELETE_TODO':
-            state.splice(action.index, 1);
-            return state;
+            let copiedState = Object.assign([], state);
+            return removeWithIndex(copiedState, action.index);
         case 'DELETE_ALL_TODO':
-            state = [];
-            return state;
+            return [];
         default:
             return state
     }

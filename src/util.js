@@ -12,3 +12,8 @@ export const renderingDomList = (parent, domList) => {
         parent.appendChild(element);
     }, this);
 };
+
+export const removeWithIndex = (sourceArray, index) => {
+    sourceArray.splice(index, 1);
+    return sourceArray;
+};
