@@ -54,6 +54,8 @@ const allDelete = () => {
 
 const getContent = () => {
     value = document.querySelector('#todo-content').value;
+    // TODO: valueをstateに持たせて使用するようにする
+    // store.dispatch(changeInput(value))
 };
 
 document.querySelector('#todo-content').addEventListener('input', getContent);

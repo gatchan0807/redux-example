@@ -9,6 +9,9 @@ export const todos = (state = [], action) => {
             return removeWithIndex(copiedState, action.index);
         case 'DELETE_ALL_TODO':
             return [];
+        // TODO: reducerを分割する
+        // case 'CHANGE_INPUT':
+        //     return
         default:
             return state
     }
