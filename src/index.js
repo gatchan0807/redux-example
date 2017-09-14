@@ -27,8 +27,8 @@ const add = () => {
 };
 
 const deleteWithIndex = () => {
-    // todoから 1 番目のものを削除
-    store.dispatch(action.deleteTodo(1));
+    // todoから 1番上のものを削除
+    store.dispatch(action.deleteTodo(0));
 
     state = store.getState();
 
