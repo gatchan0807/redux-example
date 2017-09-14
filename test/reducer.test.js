@@ -20,7 +20,8 @@ describe('リデューサーをテストする', () => {
 
         let actual = todos(initialArray, action);
 
-        assert.strictEqual(actual.length, 3);
+        assert.isArray(actual);
+        assert.lengthOf(actual, 3);
         assert.strictEqual(actual[0], firstContent);
         assert.strictEqual(actual[1], secondContent);
         assert.strictEqual(actual[2], thirdContent)
@@ -34,7 +35,8 @@ describe('リデューサーをテストする', () => {
 
         let actual = todos(initialArray, action);
 
-        assert.strictEqual(actual.length, 1)
+        assert.lengthOf(actual, 1);
+        assert.strictEqual(actual[0], initialArray[1]);
     });
 
     it('DELETE_ALL_TODOタイプですべてのデータを削除できるか', () => {
@@ -44,6 +46,6 @@ describe('リデューサーをテストする', () => {
 
         let actual = todos(initialArray, action);
 
-        assert.strictEqual(actual.length, 0);
+        assert.lengthOf(actual, 0);
     })
 });
