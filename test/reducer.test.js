@@ -1,30 +1,45 @@
 import chai from 'chai'
+import {todos} from '../src/reducer'
+
 const assert = chai.assert;
-import { todos } from '../src/reducer'
 
 describe('リデューサーをテストする', () => {
-    let initialArray = [];
+    let initialState = {};
 
     beforeEach(() => {
-        initialArray = ['first todo', 'second todo']
+        initialState = {
+            currentIndex: 1,
+            todoList: [
+                {
+                    index: 0,
+                    content: 'first todo'
+                },
+                {
+                    index: 1,
+                    content: 'second todo'
+                }
+            ]
+        }
     });
 
     it('ADD_TODOタイプでデータ追加を出来るか', () => {
-        const firstContent = initialArray[0];
-        const secondContent = initialArray[1];
         const thirdContent = 'third todo';
         const action = {
             type: 'ADD_TODO',
             content: thirdContent
         };
 
-        let actual = todos(initialArray, action);
+        const expect = {
+            index: 2,
+            content: thirdContent
+        };
 
-        assert.isArray(actual);
-        assert.lengthOf(actual, 3);
-        assert.strictEqual(actual[0], firstContent);
-        assert.strictEqual(actual[1], secondContent);
-        assert.strictEqual(actual[2], thirdContent)
+        let actual = todos(initialState, action);
+
+        assert.lengthOf(actual.todoList, 3);
+        assert.deepEqual(actual.todoList, initialState.todoList);
+        assert.deepEqual(actual.todoList[2], expect);
+        assert.strictEqual(actual.currentIndex, 2)
     });
 
     it('DELETE_TODOタイプでデータ削除が出来るか', () => {
@@ -33,10 +48,11 @@ describe('リデューサーをテストする', () => {
             index: 0
         };
 
-        let actual = todos(initialArray, action);
+        let actual = todos(initialState, action);
 
-        assert.lengthOf(actual, 1);
-        assert.strictEqual(actual[0], initialArray[1]);
+        assert.lengthOf(actual.todoList, 1);
+        assert.deepEqual(actual[0], initialState[1]);
+        assert.strictEqual(actual.currentIndex, 0)
     });
 
     it('DELETE_ALL_TODOタイプですべてのデータを削除できるか', () => {
@@ -44,8 +60,9 @@ describe('リデューサーをテストする', () => {
             type: 'DELETE_ALL_TODO'
         };
 
-        let actual = todos(initialArray, action);
+        let actual = todos(initialState, action);
 
-        assert.lengthOf(actual, 0);
+        assert.lengthOf(actual.todoList, 0);
+        assert.strictEqual(actual.currentIndex, 0);
     })
 });

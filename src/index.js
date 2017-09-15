@@ -3,13 +3,18 @@ import * as action from './action'
 import {todos} from './reducer'
 import {convertState2Dom, renderingDomList} from './util'
 
-// store の作成
-let store = createStore(todos, []);
-let state;
+const initialState = {
+    todoList: [],
+    currentIndex: 0
+};
 
+let state;
 let todoDomList;
 let parent = document.getElementById('todo-list');
 let value;
+
+// store の作成
+let store = createStore(todos, initialState);
 
 const add = () => {
     // todoの追加
@@ -22,7 +27,7 @@ const add = () => {
     while (parent.firstChild) parent.removeChild(parent.firstChild);
 
     // todoリストの変換・描画
-    todoDomList = convertState2Dom(state);
+    todoDomList = convertState2Dom(state.todoList);
     renderingDomList(parent, todoDomList);
 };
 
@@ -36,7 +41,7 @@ const deleteWithIndex = () => {
     while (parent.firstChild) parent.removeChild(parent.firstChild);
 
     // todoリストの変換・描画
-    todoDomList = convertState2Dom(state);
+    todoDomList = convertState2Dom(state.todoList);
     renderingDomList(parent, todoDomList);
 };
 
@@ -48,7 +53,7 @@ const allDelete = () => {
 
     while (parent.firstChild) parent.removeChild(parent.firstChild);
 
-    todoDomList = convertState2Dom(state);
+    todoDomList = convertState2Dom(state.todoList);
     renderingDomList(parent, todoDomList);
 };
 

@@ -1,14 +1,16 @@
-import { removeWithIndex } from './util'
+import {addTodo, deleteTodo} from './util'
 
 export const todos = (state = [], action) => {
     switch (action.type) {
         case 'ADD_TODO':
-            return state.concat(action.content);
+            return addTodo(state, action);
         case 'DELETE_TODO':
-            let copiedState = Object.assign([], state);
-            return removeWithIndex(copiedState, action.index);
+            return deleteTodo(state, action);
         case 'DELETE_ALL_TODO':
-            return [];
+            return {
+                currentIndex: 0,
+                todoList: []
+            };
         // TODO: reducerを分割する
         // case 'CHANGE_INPUT':
         //     return
