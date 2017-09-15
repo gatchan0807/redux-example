@@ -9,6 +9,7 @@ describe('リデューサーをテストする', () => {
     beforeEach(() => {
         initialState = {
             currentIndex: 1,
+            inputtedText: '',
             todoList: [
                 {
                     index: 0,
@@ -59,10 +60,38 @@ describe('リデューサーをテストする', () => {
         const action = {
             type: 'DELETE_ALL_TODO'
         };
+        let expected = {
+            currentIndex: 0,
+            inputtedText: '',
+            todoList: []
+        };
 
         let actual = todos(initialState, action);
 
         assert.lengthOf(actual.todoList, 0);
         assert.strictEqual(actual.currentIndex, 0);
+        assert.deepEqual(actual, expected)
+    });
+
+    it('CHANGE_INPUTタイプでinputの値が書き換わるか', () => {
+        let expectedContent = 'first';
+
+        const action = {
+            type: 'CHANGE_INPUT',
+            content: expectedContent
+        };
+
+        let actual = todos(initialState, action);
+
+        assert.strictEqual(actual.inputtedText, expectedContent);
+
+        // 値を更新
+        expectedContent = 'first todo';
+        action.content = expectedContent;
+
+        actual = todos(actual, action);
+
+        // 更新後の値をチェック
+        assert.strictEqual(actual.inputtedText, expectedContent)
     })
 });

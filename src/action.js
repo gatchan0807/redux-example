@@ -1,7 +1,7 @@
 export const ADD_TODO = 'ADD_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const DELETE_ALL_TODO = 'DELETE_ALL_TODO';
-// export const CHANGE_INPUT = 'CHANGE_INPUT';
+export const CHANGE_INPUT = 'CHANGE_INPUT';
 
 export const addTodo = (todo) => {
     return {
@@ -23,9 +23,9 @@ export const deleteAllTodo = () => {
     }
 };
 
-// export const changeInput = (value) => {
-//     return {
-//         type: CHANGE_INPUT,
-//         value: value
-//     }
-// };
+export const changeInput = (value) => {
+    return {
+        type: CHANGE_INPUT,
+        content: value
+    }
+};

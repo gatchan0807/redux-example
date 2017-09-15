@@ -5,21 +5,23 @@ import {convertState2Dom, renderingDomList} from './util'
 
 const initialState = {
     todoList: [],
-    currentIndex: 0
+    currentIndex: 0,
+    inputtedText: ''
 };
 
 let state;
 let todoDomList;
 let parent = document.getElementById('todo-list');
-let value;
 
 // store の作成
 let store = createStore(todos, initialState);
 
 const add = () => {
     // todoの追加
-    if (value !== undefined && value !== '') {
-        store.dispatch(action.addTodo(value));
+    state = store.getState();
+
+    if (state.inputtedText !== undefined && state.inputtedText !== '') {
+        store.dispatch(action.addTodo(state.inputtedText));
     }
 
     state = store.getState();
@@ -58,9 +60,8 @@ const allDelete = () => {
 };
 
 const getContent = () => {
-    value = document.querySelector('#todo-content').value;
-    // TODO: valueをstateに持たせて使用するようにする
-    // store.dispatch(changeInput(value))
+    let inputtedText = document.querySelector('#todo-content').value;
+    store.dispatch(action.changeInput(inputtedText))
 };
 
 document.querySelector('#todo-content').addEventListener('input', getContent);

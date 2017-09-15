@@ -34,6 +34,20 @@ describe('アクションをテストする', () => {
         let actual = action.deleteAllTodo();
 
         assert.strictEqual(actual.type, expectedType);
+    });
+
+    it('CHANGE_INPUTのアクションを返すか', () => {
+        const expectedType = 'CHANGE_INPUT';
+        const expectedContent = 'first todo';
+
+        let actual = action.changeInput(expectedContent);
+
+        const expected = {
+            type: expectedType,
+            content: expectedContent
+        };
+
+        assert.deepEqual(actual, expected);
     })
 });
 
