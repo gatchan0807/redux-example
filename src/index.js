@@ -66,5 +66,5 @@ const getContent = () => {
 document.querySelector('#todo-content').addEventListener('input', getContent);
 
 document.querySelector('#add-button').addEventListener('click', add);
-document.querySelector('#delete-button').addEventListener('click', deleteWithIndex);
-document.querySelector('#delete-all-button').addEventListener('click', allDelete);
+document.querySelector('#done-button').addEventListener('click', deleteWithIndex);
+document.querySelector('#done-all-button').addEventListener('click', allDelete);
