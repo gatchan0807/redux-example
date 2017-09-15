@@ -1,6 +1,7 @@
 import chai from 'chai'
-const assert = chai.assert;
 import * as action from '../src/action'
+
+const assert = chai.assert;
 
 describe('アクションをテストする', () => {
     it('ADD_TODOのアクションを返すか', () => {

@@ -3,7 +3,7 @@ export const DELETE_TODO = 'DELETE_TODO';
 export const DELETE_ALL_TODO = 'DELETE_ALL_TODO';
 // export const CHANGE_INPUT = 'CHANGE_INPUT';
 
-export const addTodo = (/* content */ todo) => {
+export const addTodo = (todo) => {
     return {
         type: ADD_TODO,
         content: todo
