@@ -10,10 +10,10 @@ export const addTodo = (todo) => {
     }
 };
 
-export const deleteTodo = (index) => {
+export const deleteTodo = (indexes) => {
     return {
         type: DELETE_TODO,
-        index: index
+        indexes: indexes
     }
 };
 

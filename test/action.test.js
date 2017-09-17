@@ -20,7 +20,7 @@ describe('アクションをテストする', () => {
         const expectedIndex = 1;
         const expected = {
             type: 'DELETE_TODO',
-            index: expectedIndex
+            indexes: expectedIndex
         };
 
         let actual = action.deleteTodo(expectedIndex);

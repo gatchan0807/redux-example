@@ -46,14 +46,13 @@ describe('リデューサーをテストする', () => {
     it('DELETE_TODOタイプでデータ削除が出来るか', () => {
         const action = {
             type: 'DELETE_TODO',
-            index: 0
+            indexes: [0]
         };
 
         let actual = todos(initialState, action);
 
         assert.lengthOf(actual.todoList, 1);
         assert.deepEqual(actual[0], initialState[1]);
-        assert.strictEqual(actual.currentIndex, 0)
     });
 
     it('DELETE_ALL_TODOタイプですべてのデータを削除できるか', () => {

@@ -34,8 +34,12 @@ const add = () => {
 };
 
 const deleteWithIndex = () => {
-    // todoから 1番上のものを削除
-    store.dispatch(action.deleteTodo(0));
+    let checkedBoxList = document.querySelectorAll('#todo-list input:checked');
+    let selectedTodoList = Array.prototype.map.call(checkedBoxList, element => {
+        return element.value / 1
+    });
+
+    store.dispatch(action.deleteTodo(selectedTodoList));
 
     state = store.getState();
 

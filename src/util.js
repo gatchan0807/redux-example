@@ -7,6 +7,7 @@ export const convertState2Dom = (/*Array*/ state) => {
         let checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
         checkbox.setAttribute('value', element.index);
+        checkbox.setAttribute('class', 'todo-item-checkbox');
 
         domElement.appendChild(checkbox);
         return domElement
@@ -19,8 +20,14 @@ export const renderingDomList = (parent, domList) => {
     }, this);
 };
 
-export const removeWithIndex = (sourceArray, index) => {
-    sourceArray.splice(index, 1);
+export const removeWithIndex = (sourceArray, _index) => {
+    // breakを使うためにfor記法を使用。
+    for (let i = 0; i < sourceArray.length; i++) {
+        if (_index === sourceArray[i].index) {
+            sourceArray.splice(i, 1);
+            break;
+        }
+    }
     return sourceArray;
 };
 
@@ -40,9 +47,9 @@ export const addTodo = (state, action) => {
 export const deleteTodo = (state, action) => {
     let copiedState = Object.assign([], state);
 
-    copiedState.currentIndex--;
-
-    copiedState.todoList = removeWithIndex(copiedState.todoList, action.index);
+    action.indexes.forEach(element => {
+        copiedState.todoList = removeWithIndex(copiedState.todoList, element);
+    });
 
     return copiedState;
 };
