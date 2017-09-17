@@ -9,7 +9,6 @@ export const todo = (state = initialTodoState, action) => {
         case 'DELETE_ALL_TODO':
             return {
                 currentIndex: 0,
-                inputtedText: state.inputtedText,
                 todoList: []
             };
         default:
