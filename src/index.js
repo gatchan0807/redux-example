@@ -1,39 +1,30 @@
 import {createStore} from 'redux'
 import * as action from './action'
-import {todos} from './reducer'
+import {rootReducer} from './reducer'
 import {convertState2Dom, renderingDomList} from './util'
 
-const initialState = {
-    todoList: [],
-    currentIndex: 0,
-    inputtedText: ''
-};
-
-let state;
-let todoDomList;
-let parent = document.getElementById('todo-list');
-
 // store の作成
-let store = createStore(todos, initialState);
+let store = createStore(rootReducer);
 
-const add = () => {
+const addTodo = () => {
     // todoの追加
-    state = store.getState();
+    let state = store.getState();
 
-    if (state.inputtedText !== undefined && state.inputtedText !== '') {
-        store.dispatch(action.addTodo(state.inputtedText));
+    if (state.input.inputtedText !== undefined && state.input.inputtedText !== '') {
+        store.dispatch(action.addTodo(state.input.inputtedText));
     }
 
     state = store.getState();
 
+    let parent = document.getElementById('todo-list');
     while (parent.firstChild) parent.removeChild(parent.firstChild);
 
     // todoリストの変換・描画
-    todoDomList = convertState2Dom(state.todoList);
+    let todoDomList = convertState2Dom(state.todo.todoList);
     renderingDomList(parent, todoDomList);
 };
 
-const deleteWithIndex = () => {
+const deleteTodoWithIndex = () => {
     let checkedBoxList = document.querySelectorAll('#todo-list input:checked');
     let selectedTodoList = Array.prototype.map.call(checkedBoxList, element => {
         return element.value / 1
@@ -41,25 +32,27 @@ const deleteWithIndex = () => {
 
     store.dispatch(action.deleteTodo(selectedTodoList));
 
-    state = store.getState();
+    let state = store.getState();
 
     // DOMを全部消す
+    let parent = document.getElementById('todo-list');
     while (parent.firstChild) parent.removeChild(parent.firstChild);
 
     // todoリストの変換・描画
-    todoDomList = convertState2Dom(state.todoList);
+    let todoDomList = convertState2Dom(state.todo.todoList);
     renderingDomList(parent, todoDomList);
 };
 
-const allDelete = () => {
+const allTodoDelete = () => {
     // todoを全て削除
     store.dispatch(action.deleteAllTodo());
 
-    state = store.getState();
+    let state = store.getState();
 
+    let parent = document.getElementById('todo-list');
     while (parent.firstChild) parent.removeChild(parent.firstChild);
 
-    todoDomList = convertState2Dom(state.todoList);
+    let todoDomList = convertState2Dom(state.todo.todoList);
     renderingDomList(parent, todoDomList);
 };
 
@@ -70,7 +63,7 @@ const getContent = () => {
 
 document.querySelector('#todo-content').addEventListener('input', getContent);
 
-document.querySelector('#todo-form').addEventListener('submit', add);
-document.querySelector('#add-button').addEventListener('click', add);
-document.querySelector('#done-button').addEventListener('click', deleteWithIndex);
-document.querySelector('#done-all-button').addEventListener('click', allDelete);
+document.querySelector('#todo-form').addEventListener('submit', addTodo);
+document.querySelector('#add-button').addEventListener('click', addTodo);
+document.querySelector('#done-button').addEventListener('click', deleteTodoWithIndex);
+document.querySelector('#done-all-button').addEventListener('click', allTodoDelete);
