@@ -1,5 +1,5 @@
 import chai from 'chai'
-import {todos} from '../src/reducer'
+import {rootReducer} from '../src/reducer'
 
 const assert = chai.assert;
 
@@ -8,18 +8,72 @@ describe('リデューサーをテストする', () => {
 
     beforeEach(() => {
         initialState = {
-            currentIndex: 1,
-            inputtedText: '',
-            todoList: [
-                {
-                    index: 0,
-                    content: 'first todo'
-                },
-                {
-                    index: 1,
-                    content: 'second todo'
-                }
-            ]
+            todo: {
+                currentIndex: 1,
+                todoList: [
+                    {
+                        index: 0,
+                        content: 'first todo'
+                    },
+                    {
+                        index: 1,
+                        content: 'second todo'
+                    }
+                ]
+            },
+            input: {
+                inputtedText: '',
+            }
+        }
+    });
+
+    it('複数に分割されたstateを返すか', () => {
+        let expected = {
+            todo: {
+                currentIndex: 1,
+                todoList: [
+                    {
+                        index: 0,
+                        content: 'first todo'
+                    },
+                    {
+                        index: 1,
+                        content: 'second todo'
+                    }
+                ]
+            },
+            input: {
+                inputtedText: '',
+            }
+        };
+
+        let actual = rootReducer(initialState, {type: null});
+
+        assert.deepEqual(actual, expected)
+    })
+});
+
+describe('TODO関係のリデューサーをテストする', () => {
+    let initialState = {};
+
+    beforeEach(() => {
+        initialState = {
+            todo: {
+                currentIndex: 1,
+                todoList: [
+                    {
+                        index: 0,
+                        content: 'first todo'
+                    },
+                    {
+                        index: 1,
+                        content: 'second todo'
+                    }
+                ]
+            },
+            input: {
+                inputtedText: '',
+            }
         }
     });
 
@@ -35,12 +89,12 @@ describe('リデューサーをテストする', () => {
             content: thirdContent
         };
 
-        let actual = todos(initialState, action);
+        let actual = rootReducer(initialState, action);
 
-        assert.lengthOf(actual.todoList, 3);
-        assert.deepEqual(actual.todoList, initialState.todoList);
-        assert.deepEqual(actual.todoList[2], expect);
-        assert.strictEqual(actual.currentIndex, 2)
+        assert.lengthOf(actual.todo.todoList, 3);
+        assert.deepEqual(actual.todo.todoList, initialState.todo.todoList);
+        assert.deepEqual(actual.todo.todoList[2], expect);
+        assert.strictEqual(actual.todo.currentIndex, 2)
     });
 
     it('DELETE_TODOタイプでデータ削除が出来るか', () => {
@@ -49,27 +103,52 @@ describe('リデューサーをテストする', () => {
             indexes: [0]
         };
 
-        let actual = todos(initialState, action);
+        let actual = rootReducer(initialState, action);
 
-        assert.lengthOf(actual.todoList, 1);
-        assert.deepEqual(actual[0], initialState[1]);
+        assert.lengthOf(actual.todo.todoList, 1);
+        assert.deepEqual(actual.todo[0], initialState[1]);
     });
 
     it('DELETE_ALL_TODOタイプですべてのデータを削除できるか', () => {
         const action = {
             type: 'DELETE_ALL_TODO'
         };
+
         let expected = {
             currentIndex: 0,
-            inputtedText: '',
             todoList: []
         };
 
-        let actual = todos(initialState, action);
+        let actual = rootReducer(initialState, action);
 
-        assert.lengthOf(actual.todoList, 0);
-        assert.strictEqual(actual.currentIndex, 0);
-        assert.deepEqual(actual, expected)
+        assert.lengthOf(actual.todo.todoList, 0);
+        assert.strictEqual(actual.todo.currentIndex, 0);
+        assert.deepEqual(actual.todo, expected)
+    });
+});
+
+describe('INPUT関係のリデューサーをテストする', () => {
+    let initialState = {};
+
+    beforeEach(() => {
+        initialState = {
+            todo: {
+                currentIndex: 1,
+                todoList: [
+                    {
+                        index: 0,
+                        content: 'first todo'
+                    },
+                    {
+                        index: 1,
+                        content: 'second todo'
+                    }
+                ]
+            },
+            input: {
+                inputtedText: '',
+            }
+        }
     });
 
     it('CHANGE_INPUTタイプでinputの値が書き換わるか', () => {
@@ -80,17 +159,17 @@ describe('リデューサーをテストする', () => {
             content: expectedContent
         };
 
-        let actual = todos(initialState, action);
+        let actual = rootReducer(initialState, action);
 
-        assert.strictEqual(actual.inputtedText, expectedContent);
+        assert.strictEqual(actual.input.inputtedText, expectedContent);
 
         // 値を更新
         expectedContent = 'first todo';
         action.content = expectedContent;
 
-        actual = todos(actual, action);
+        actual = rootReducer(actual, action);
 
         // 更新後の値をチェック
-        assert.strictEqual(actual.inputtedText, expectedContent)
+        assert.strictEqual(actual.input.inputtedText, expectedContent)
     })
 });
