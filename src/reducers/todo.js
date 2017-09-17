@@ -1,4 +1,5 @@
-import {addTodo, deleteTodo, initialTodoState} from '../util'
+import {addTodo, deleteTodo} from "./reducerUtil";
+import {initialTodoState} from "../initialStates";
 
 export const todo = (state = initialTodoState, action) => {
     switch (action.type) {

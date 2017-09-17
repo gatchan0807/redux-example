@@ -1,7 +1,7 @@
 import {createStore} from 'redux'
 import * as action from './action'
 import {rootReducer} from './reducer'
-import {convertState2Dom, renderingDomList} from './util'
+import {convertState2Dom, renderingDomList} from './renderingUtil'
 
 // store の作成
 let store = createStore(rootReducer);

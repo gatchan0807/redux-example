@@ -1,4 +1,4 @@
-import {initialInputState} from "../util";
+import {initialInputState} from "../initialStates";
 
 export const input = (state = initialInputState, action) => {
     switch (action.type) {
